@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by huanze on 7/28/2016.
  */
-public class TestVertice {
+public class TestVerticeAndEdge {
     @Test
     public void testEquality(){
         Vertice v1 = new Vertice(1);
@@ -93,11 +93,37 @@ public class TestVertice {
         v1.addEdgeTo(v2);
         v1.addEdgeTo(v2);
         v1.contractEdge(v2);
-        assertEquals(0, v1.getEdgeCountTo(v2));
-        assertEquals(0, v2.getEdgeCountTo(v1));
+        assertEquals("Self looping edges should be deleted", 0, v1.getEdgeCountTo(v2));
+        assertEquals("Self looping edges should be deleted", 0, v2.getEdgeCountTo(v1));
     }
 
-//    @Test
-//    public void testFusingEdges
+    @Test
+    public void testFusingEdges(){
+        Vertice v1 = new Vertice(1);
+        Vertice v2 = new Vertice(2);
+        Vertice v3 = new Vertice(3);
+        v1.addEdgeTo(v2);
+        v2.addEdgeTo(v3);
+        assertEquals(0, v1.getEdgeCountTo(v3));
+        v1.contractEdge(v2);
+        assertEquals(1, v1.getEdgeCountTo(v3));
+    }
+
+    @Test
+    public void testFusingEdges2(){
+        Vertice v1 = new Vertice(1);
+        Vertice v2 = new Vertice(2);
+        Vertice v3 = new Vertice(3);
+        Vertice v4 = new Vertice(4);
+        v1.addEdgeTo(v2);
+        v1.addEdgeTo(v3);
+        v2.addEdgeTo(v3);
+        v2.addEdgeTo(v4);
+        v3.addEdgeTo(v4);
+        v1.contractEdge(v2);
+        v1.contractEdge(v3);
+
+        assertEquals(2, v1.getEdgeCountTo(v4));
+    }
 
 }

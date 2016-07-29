@@ -1,14 +1,13 @@
 package stanford.algorithms.week3;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by huanze on 7/28/2016.
  */
 public class Vertice {
     private int label;
-    Set<Edge> edges = new HashSet<>();
+    List<Edge> edges = new ArrayList<>();
     public Vertice(int label) {
         this.label = label;
     }
@@ -61,12 +60,19 @@ public class Vertice {
         return count;
     }
 
+    /**
+     * Contracts an edge with v2. Other edges v2 had would be bound to this vertice.
+     *
+     * @param v2 Vertice that has an edge with this one
+     */
     public void contractEdge(Vertice v2) {
         removeEdgesTo(v2);
-        for (Edge edge2 : v2.edges) {
+        List<Edge> copy = new ArrayList<>(v2.edges);
+        for (Edge edge2 :copy) {
             Vertice theOtherVertice = edge2.getTheOtherVertice(v2);
             addEdgeTo(theOtherVertice);
             v2.removeEdge(edge2);
+            theOtherVertice.removeEdge(edge2);
         }
     }
 
@@ -91,5 +97,16 @@ public class Vertice {
     @Override
     public String toString() {
         return String.valueOf(label);
+    }
+
+    public Vertice contractAnyEdge() {
+        if(edges.isEmpty()){
+            return null;
+        }
+        int r = new Random().nextInt(edges.size());
+        Edge edge = edges.get(r);
+        Vertice v2 = edge.getTheOtherVertice(this);
+        contractEdge(v2);
+        return v2;
     }
 }
