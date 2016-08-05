@@ -9,7 +9,9 @@ import java.util.List;
 public class Vertice {
     private int id;
     private boolean explored;
-    List<Vertice> edges = new ArrayList<>();
+    List<Vertice> arcsTo = new ArrayList<>();
+    private int completionTime;
+
     public Vertice(int id) {
         this.id = id;
     }
@@ -23,11 +25,11 @@ public class Vertice {
     }
 
     public List<Vertice> nextVertices() {
-        return edges;
+        return arcsTo;
     }
 
-    public void addEdgeTo(Vertice v2) {
-        edges.add(v2);
+    public void addArcTo(Vertice v2) {
+        arcsTo.add(v2);
     }
 
     @Override
@@ -54,11 +56,11 @@ public class Vertice {
     }
 
     private String edgesToString() {
-        if(edges.isEmpty()){
+        if(arcsTo.isEmpty()){
             return "";
         }
         StringBuilder builder = new StringBuilder();
-        for(Vertice edge : edges){
+        for(Vertice edge : arcsTo){
             builder.append(edge.getId() + ",");
         }
         return builder.toString().substring(0, builder.length() - 1);
@@ -66,5 +68,23 @@ public class Vertice {
 
     public void setExplored() {
         explored = true;
+    }
+
+    public int getCompletionTime() {
+        return completionTime;
+    }
+
+    public void setCompletionTime(int completionTime) {
+        this.completionTime = completionTime;
+    }
+
+    public boolean hasArcTo(Vertice v2) {
+        return arcsTo.contains(v2);
+    }
+
+    public void swapIdAndCompletionTime() {
+        int temp = id;
+        id = completionTime;
+        completionTime = temp;
     }
 }

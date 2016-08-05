@@ -24,8 +24,8 @@ public class TestGraphFactory {
         assertNotNull(v1);
         assertNotNull(v2);
         assertNotNull(v3);
-        assertTrue(v1.nextVertices().contains(v2));
-        assertTrue(v2.nextVertices().contains(v3));
-        assertTrue(v3.nextVertices().contains(v1));
+        assertTrue(v1.hasArcTo(v2));
+        assertTrue(v2.hasArcTo(v3));
+        assertTrue(v3.hasArcTo(v1));
     }
 }

@@ -1,7 +1,5 @@
 package stanford.algorithms.week4;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,7 +12,7 @@ public class GraphFactory {
         while (in.hasNextInt()) {
             Vertice v1 = getOrCreateVertice(graph, in.nextInt());
             Vertice v2 = getOrCreateVertice(graph, in.nextInt());
-            v1.addEdgeTo(v2);
+            v1.addArcTo(v2);
         }
         return graph;
     }
