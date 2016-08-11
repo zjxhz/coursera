@@ -1,6 +1,7 @@
 package stanford.algorithms.week6;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -8,7 +9,15 @@ import java.util.List;
  */
 public class Heap {
 
+    public Heap(Comparator<Integer> comparator){
+        this.comparator = comparator;
+    }
+
+    public Heap(){
+    }
+
     List<Integer> data = new ArrayList<>();
+    private Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
 
     public void insert(int i) {
         data.add(i);
@@ -22,7 +31,7 @@ public class Heap {
         int inserted  = data.get(index);
         int parentIndex = (index  - 1)/ 2;
         int parent = data.get(parentIndex);
-        if(inserted < parent){
+        if(comparator.compare(inserted, parent) < 0){
             swap(index, parentIndex);
         }
         bubbleUp(parentIndex);
@@ -38,7 +47,7 @@ public class Heap {
         return data.size();
     }
 
-    public int exactMin() {
+    public int exact() {
         int min = data.get(0);
         int last = data.remove((data.size() - 1));
         if(data.size() > 0){
@@ -52,10 +61,10 @@ public class Heap {
         int val = data.get(index);
         int leftChild = getLeftChild(index);
         int rightChild = getRightChild(index);
-        if(leftChild < rightChild && val > leftChild){
+        if(comparator.compare(leftChild, rightChild) < 0 && comparator.compare(val, leftChild) > 0){
             swap(index, getLeftChildIndex(index));
             bubbleDown(getLeftChildIndex(index));
-        } else if(rightChild < leftChild && val > rightChild){
+        } else if(comparator.compare(rightChild, leftChild) < 0 && comparator.compare(val, rightChild) > 0 ){
             swap(index, getRightChildIndex(index));
             bubbleDown(getRightChildIndex(index));
         }
