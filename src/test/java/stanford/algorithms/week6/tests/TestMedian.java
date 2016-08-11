@@ -3,6 +3,8 @@ package stanford.algorithms.week6.tests;
 import org.junit.Test;
 import stanford.algorithms.week6.MedianFinder;
 
+import java.util.Scanner;
+
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -11,14 +13,24 @@ import static junit.framework.TestCase.assertEquals;
 public class TestMedian {
     @Test
     public void test1(){
-        int [] arr = {1,2,3};
-        assertEquals(4, MedianFinder.find(arr));//1,1,2
+        MedianFinder mf = new MedianFinder();
+        assertEquals(1, mf.offer(1));
+        assertEquals(1, mf.offer(2));
+        assertEquals(2, mf.offer(3));
+
     }
 
     @Test
     public void test2(){
-        int [] arr = {1,2,3};//pa2.txt -> 9335
-        assertEquals(4, MedianFinder.find(arr));//1,1,2
+        Scanner in = new Scanner(ClassLoader.getSystemResourceAsStream("testdata/week6/pa2.txt"));
+        int sum = 0;
+        MedianFinder mf = new MedianFinder();
+        while(in.hasNext()){
+            int m = mf.offer(in.nextInt());
+            System.out.println(m);
+            sum += m;
+        }
+        assertEquals(9335, sum % 10000);
     }
 
 }

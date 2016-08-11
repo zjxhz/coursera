@@ -9,16 +9,19 @@ import java.util.List;
  */
 public class Heap {
 
-    public Heap(Comparator<Integer> comparator){
+    private Heap(Comparator<Integer> comparator){
         this.comparator = comparator;
     }
 
-    public Heap(){
+    private Heap(){
     }
 
     List<Integer> data = new ArrayList<>();
     private Comparator<Integer> comparator = (o1, o2) -> o1 - o2;
 
+    public int poll(){
+        return data.get(0);
+    }
     public void insert(int i) {
         data.add(i);
         bubbleUp(data.size() - 1);
@@ -48,33 +51,46 @@ public class Heap {
     }
 
     public int exact() {
-        int min = data.get(0);
+        int root = data.get(0);
         int last = data.remove((data.size() - 1));
         if(data.size() > 0){
             data.set(0, last);
             bubbleDown(0);
         }
-        return min;
+        return root;
     }
 
     private void bubbleDown(int index) {
         int val = data.get(index);
-        int leftChild = getLeftChild(index);
-        int rightChild = getRightChild(index);
-        if(comparator.compare(leftChild, rightChild) < 0 && comparator.compare(val, leftChild) > 0){
-            swap(index, getLeftChildIndex(index));
-            bubbleDown(getLeftChildIndex(index));
-        } else if(comparator.compare(rightChild, leftChild) < 0 && comparator.compare(val, rightChild) > 0 ){
-            swap(index, getRightChildIndex(index));
-            bubbleDown(getRightChildIndex(index));
+        if(isLeaf(index)){
+            //done
+        } else if(hasOnlyLeftChild(index)){
+            if(comparator.compare(val, getLeftChild(index)) > 0){
+                swap(index, getLeftChildIndex(index));
+            }
+        } else if(hasRightChild(index)){ //meaning it has left child too
+            int leftChild = getLeftChild(index);
+            int rightChild = getRightChild(index);
+            if(comparator.compare(leftChild, rightChild) < 0 && comparator.compare(val, leftChild) > 0){
+                swap(index, getLeftChildIndex(index));
+                bubbleDown(getLeftChildIndex(index));
+            } else if(comparator.compare(rightChild, leftChild) < 0 && comparator.compare(val, rightChild) > 0 ){
+                swap(index, getRightChildIndex(index));
+                bubbleDown(getRightChildIndex(index));
+            }
         }
     }
 
+    private boolean hasOnlyLeftChild(int index) {
+        return hasLeftChild(index) && !hasRightChild(index);
+    }
+
+    private boolean isLeaf(int index) {
+        return !hasLeftChild(index);
+    }
+
     private int getRightChild(int index) {
-        if(hasRightChild(index)){
-            return data.get(getRightChildIndex(index));
-        }
-        return Integer.MAX_VALUE;
+        return data.get(getRightChildIndex(index));
     }
 
     private boolean hasRightChild(int index) {
@@ -86,10 +102,7 @@ public class Heap {
     }
 
     private int getLeftChild(int index) {
-        if(hasLeftChild(index)){
-            return data.get(getLeftChildIndex(index));
-        }
-        return Integer.MAX_VALUE;
+        return data.get(getLeftChildIndex(index));
 
     }
 
@@ -103,5 +116,17 @@ public class Heap {
 
     public static void main(String[] args) {
 
+    }
+
+    public static Heap createMinHeap() {
+        return new Heap();
+    }
+
+    public static Heap createMaxHeap() {
+        return new Heap((o1,o2) -> o2 - o1);
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
     }
 }

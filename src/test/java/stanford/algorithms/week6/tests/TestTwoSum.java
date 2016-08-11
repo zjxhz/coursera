@@ -15,9 +15,9 @@ import static junit.framework.TestCase.assertEquals;
 public class TestTwoSum {
     @Test
     public void test1(){
-        int [] arr = {1, 2, 3, 4};
+        long [] arr = {1, 2, 3, 4};
 
         Set set = new HashSet<>(Arrays.asList(arr));
-        assertEquals(4, TwoSum.find(set, 3, 5));//1+2, 1+3, 1+4, 2+3
+        assertEquals(4L, TwoSum.find(set, 3, 5));//1+2, 1+3, 1+4, 2+3
     }
 }
