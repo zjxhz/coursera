@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Clustering {
     public static void main(String[] args) {
-        Graph graph = GraphFactory.create("testdata/stanford/algorithms/part2/week2/clustering.txt");
+        Graph graph = GraphFactory.createUndirectedGraph("testdata/stanford/algorithms/part2/week2/clustering.txt");
         Clustering clustering = new Clustering();
         int spacing = clustering.findMaxSpacing(graph, 4);
         System.out.println(spacing);

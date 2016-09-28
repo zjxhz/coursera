@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class BST {
     public static void main(String[] args) {
         Scanner in = new Scanner(
-                ClassLoader.getSystemResourceAsStream("testdata/stanford/algorithms/part2/week3/bst_0.txt"));
+                ClassLoader.getSystemResourceAsStream("testdata/stanford/algorithms/part2/week3/bst_ps3.txt"));
         int N = in.nextInt();
         List<Node> nodes = new ArrayList<>();
         for (int i = 1; i <= N; i++) {
@@ -19,7 +19,7 @@ public class BST {
         }
 
         int min = findMin(nodes);
-        System.out.println(min / 100);
+        System.out.println(min);
     }
 
     private static List<Node> getSubTree(List<Node> nodes, int start, int end) {
@@ -69,5 +69,13 @@ class Node {
     public Node(int key, int probability) {
         this.key = key;
         this.probability = probability;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "key=" + key +
+                ", probability=" + probability +
+                '}';
     }
 }

@@ -15,12 +15,17 @@ public class Vertice implements Comparable<Vertice>{
     }
 
     public void addEdgeTo(Vertice v2, int cost) {
+        addDirectedEdgeTo(v2, cost);
+        v2.addEdgeTo(this, cost);
+    }
+
+    public void addDirectedEdgeTo(Vertice v2, int cost) {
         if(hasEdgeTo(v2)){
             return;
         }
         Edge edge = new Edge(this, v2, cost);
         edges.add(edge);
-        v2.addEdgeTo(this, cost);
+
     }
 
     private boolean hasEdgeTo(Vertice v2) {
@@ -60,5 +65,9 @@ public class Vertice implements Comparable<Vertice>{
     @Override
     public int compareTo(Vertice o) {
         return id.compareTo(o.id);
+    }
+
+    public int getIdAsInt() {
+        return Integer.valueOf(id);
     }
 }

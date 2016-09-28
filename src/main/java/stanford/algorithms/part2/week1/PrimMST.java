@@ -5,9 +5,7 @@ import stanford.algorithms.part2.model.graph.Graph;
 import stanford.algorithms.part2.model.graph.GraphFactory;
 import stanford.algorithms.part2.model.graph.Vertice;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,7 +13,7 @@ import java.util.Set;
  */
 public class PrimMST {
     public static void main(String[] args) {
-        Graph graph = GraphFactory.create("testdata/stanford/algorithms/part2/week1/edges.txt");
+        Graph graph = GraphFactory.createUndirectedGraph("testdata/stanford/algorithms/part2/week1/edges.txt");
         Vertice v1 = graph.getVertice("1");
         Set<Vertice> included = new HashSet<>();
         included.add(v1);
