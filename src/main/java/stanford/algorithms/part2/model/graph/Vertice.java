@@ -16,7 +16,7 @@ public class Vertice implements Comparable<Vertice>{
 
     public void addEdgeTo(Vertice v2, int cost) {
         addDirectedEdgeTo(v2, cost);
-        v2.addEdgeTo(this, cost);
+        v2.addDirectedEdgeTo(this, cost);
     }
 
     public void addDirectedEdgeTo(Vertice v2, int cost) {
