@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class BST {
     public static void main(String[] args) {
         Scanner in = new Scanner(
-                ClassLoader.getSystemResourceAsStream("testdata/stanford/algorithms/part2/week3/bst_ps3.txt"));
+                ClassLoader.getSystemResourceAsStream("testdata/stanford/algorithms/part2/week7/bst.txt"));
         int N = in.nextInt();
         List<Node> nodes = new ArrayList<>();
         for (int i = 1; i <= N; i++) {
