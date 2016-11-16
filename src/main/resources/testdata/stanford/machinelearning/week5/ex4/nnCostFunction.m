@@ -64,9 +64,11 @@ Theta2_grad = zeros(size(Theta2));
 
 
 X = [ones(m,1) X];
-a2 = sigmoid(X * Theta1');
+z2 = X * Theta1';
+a2 = sigmoid(z2);
 a2 = [ones(m,1) a2];
-a3 = sigmoid(a2 * Theta2');
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
 for i = 1:m
   yi = y(i);
   yiVec = zeros(num_labels, 1);
