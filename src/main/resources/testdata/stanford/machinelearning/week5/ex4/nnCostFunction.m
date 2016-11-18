@@ -100,22 +100,32 @@ J += reg;
 DELTA1 = zeros(size(Theta1));
 DELTA2 = zeros(size(Theta2));
 for t = 1:m
-  a1_t = a1(t,:);
-  a3_t = a3(t,:);
+  a1_t = a1(t,:)'; % vector with bias unit
+  a2_t = a2(t,:)'; % vector with bias unit
+  a3_t = a3(t,:)'; % vector with bias unit
+
   y_t = y(t);
   y_tVec = zeros(num_labels, 1);
   y_tVec(y_t) = 1;
-  delta3 = a3_t' - y_tVec;
-  z2_t = z2(t, :);
-  z2_t = [1; z2_t'];
+  
+  delta3 = a3_t - y_tVec;
+  
+  z2_t = z2(t, :)'; % vector without the bias unit
+  z2_t = [1; z2_t]; % adding the bias unit to calc delta2
   delta2 = Theta2' * delta3 .* sigmoidGradient(z2_t);
   delta2 = delta2(2:end);
-  a2_t = sigmoid(z2_t);
-  DELTA1 += delta2 * a1_t;
+  
+  DELTA1 += delta2 * a1_t';
   DELTA2 += delta3 * a2_t';
 end
 Theta1_grad = DELTA1 / m;
 Theta2_grad = DELTA2 / m;
+
+% regularization
+reg1 = lambda /m * [zeros(hidden_layer_size,1) Theta1(:,2:end)];
+Theta1_grad += reg1;
+reg2 = lambda /m * [zeros(num_labels,1) Theta2(:,2:end)];
+Theta2_grad += reg2;
 % -------------------------------------------------------------
 
 % =========================================================================
