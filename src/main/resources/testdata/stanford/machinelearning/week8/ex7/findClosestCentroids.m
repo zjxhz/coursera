@@ -20,7 +20,20 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
+m = length(X);
 
+for i = 1:m
+  x = X(i,:);
+  min = -1;
+  for j = 1:K
+    u = centroids(j,:);
+    distance = sum((x - u) .^ 2);
+    if min == -1 || distance < min
+      min = distance;
+      idx(i) = j;
+    end
+  end
+end
 
 
 
