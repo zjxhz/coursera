@@ -22,10 +22,8 @@ X_rec = zeros(size(Z, 1), size(U, 1));
 %               
 m = size(Z,1);
 n = size(U,1);
-for i = 1:m
-%  v = Z(i,:)';
-%  X_rec(i) = v' * U(j, 1:K)';
-end
+Ureduce = U(:, 1:K);
+X_rec= Z * Ureduce';
 % =============================================================
 
 end
