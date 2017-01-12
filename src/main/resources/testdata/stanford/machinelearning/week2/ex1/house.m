@@ -21,9 +21,9 @@ function house(alpha, iterations)
   printf('theta using gradient descent with alpha(%f) and iterations(%d): [%.3f;%.3f], cost: %f\n', ...
     alpha, iterations, theta, J);
   
-  num = 200;
-  a = linspace(0, theta(1), num);
-  b = linspace(0, theta(2), num);
+  num = 300;
+  a = linspace(0, theta(1) * 2, num);
+  b = linspace(0, theta(2) * 2, num);
   [aa,bb] = meshgrid(a,b);
   zz = zeros(size(aa));
   for i = 1:num
@@ -36,11 +36,12 @@ function house(alpha, iterations)
   mesh(aa,bb,zz);
   
   hold on;
-  step = 10;
-  theta0_history = theta_history(1,:)(1:step:end);
-  theta1_history = theta_history(2,:)(1:step:end);
-  J_history = J_history(1:step:end);
-  plot3(theta0_history,theta1_history,J_history,'marker','x','color','k','linewidth',3.0);
-  %scatter3(theta0_history,theta1_history,J_history,8,'k','x');
+  % step = 500;
+  sample = [1:10,10:100:iterations];
+  theta0_history = theta_history(1,:)(sample);
+  theta1_history = theta_history(2,:)(sample);
+  J_history = J_history(sample);
+  %plot3(theta0_history,theta1_history,J_history,'marker','x','color','r');
+  scatter3(theta0_history,theta1_history,J_history,12,'r','x');
   
 end
